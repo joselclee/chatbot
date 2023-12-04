@@ -20,8 +20,8 @@ remove_punct_dict = dict((ord(punct), None) for punct in string.punctuation)
 def LemNormalize(text):
     return LemTokens(nltk.word_tokenize(text.lower().translate(remove_punct_dict)))
 
-greet_inputs = ("hello", "hi", "greetings", "sup", "what's up","hey",)
-greet_responses = ["hi", "hey", "*nods*", "hi there", "hello", "I am glad! You are talking to me"]
+greet_inputs = ("hello", "hi", "greetings", "sup", "what's up","hey", "yo", "hiya", "howdy")
+greet_responses = ["hi", "hey", "*nods*", "hi there", "hello", "how are you", "yo", "aye" ]
 
 def greet(sentence):
     for word in sentence.split():
@@ -45,7 +45,7 @@ def response(user_response):
     
     req_tfidf = flat[-2]
     if(req_tfidf==0):
-        bot_response=bot_response+"I'm sorry, I don't understand!"
+        bot_response=bot_response+"I didn't get that."
         return bot_response
     else:
         bot_response = bot_response+sentence_tokens[idx]
@@ -58,7 +58,7 @@ while(flag==True):
     user_response = input()
     user_response=user_response.lower()
     
-    if(user_response!='bye'):
+    if(user_response!='bye' or user_response!='bye!' or user_response!='goodbye' or user_response!='goodbye!'):
         if(user_response=='thanks' or user_response=='thank you' ):
             flag=False
             print("You are welcome..")
