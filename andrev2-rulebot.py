@@ -1,3 +1,12 @@
+# Description: A rule-based chatbot that uses regular expressions to match user input
+
+# THIS MODEL IS SUPER VERY VERY VERY INEFFICIENT!!!
+
+# However, it's my very first chatbot so I'm sentimental. I will try to make future rule-based models that will improve
+# on this one. Unfortunately it is very likely I will be developing more sophisticated models in the future, so this
+# model may be left as is.
+
+
 import re
 import random
 
@@ -37,20 +46,21 @@ class AndreV2:
             'about_andrev2': r'.*\s*andrev2',
             'about_session': r'.*\s*session.*',
             'about_website': r'.*\s*website.*',
-            'what_intent': r'what.*',
-            'how_intent': r'how.*',
-            'who_intent': r'who.*',
-            'where_intent': r'where.*',  
-            'ok_intent': r'ok.*',
-            'fine_intent': r'fine.*',
-            'good_intent': r'good.*',
-            'bad_intent': r'bad.*',
-            'sad_intent': r'sad.*',
-            'happy_intent': r'happy.*',
-            'great_intent': r'great.*',
-            'awesome_intent': r'awesome.*',
-            'cool_intent': r'cool.*',
-            'nice_intent': r'nice.*',
+            'what_intent': r'.*\s*what.*',
+            'how_intent': r'.*\s*how.*',
+            'who_intent': r'.*\s*who.*',
+            'where_intent': r'.*\s*where.*',  
+            'ok_intent': r'.*\s*ok.*',
+            'fine_intent': r'.*\s*fine.*',
+            'good_intent': r'.*\s*good.*',
+            'bad_intent': r'.*\s*bad.*',
+            'sad_intent': r'.*\s*sad.*',
+            'happy_intent': r'.*\s*happy.*',
+            'great_intent': r'.*\s*great.*',
+            'awesome_intent': r'.*\s*awesome.*',
+            'cool_intent': r'.*\s*cool.*',
+            'nice_intent': r'.*\s*nice.*',
+            'your_name_intent': r'.*\s*your name.*',
             'no_match_intent': r'.*',     
         }
 
@@ -135,6 +145,7 @@ class AndreV2:
             'how_intent': self.how_intent,
             'who_intent': self.who_intent,
             'where_intent': self.where_intent,
+            'why_intent': self.why_intent, # 'why' is a special case, it's a subset of 'why_intent
             'ok_intent': self.ok_intent,
             'fine_intent': self.fine_intent,
             'good_intent': self.good_intent,
@@ -155,40 +166,11 @@ class AndreV2:
 
         return self.no_match_intent()
 
-
     def describe_website_intent(self):
         responses = (
             "My website is still a work in progress",
             "My programmer Andre v1 is still working on it",
             "I hope it's good!",
-        )
-        return random.choice(responses)
-    def why_intent(self):
-        responses = (
-            "Why not?",
-            "I'm not sure.",
-            "I don't know.",
-        )
-        return random.choice(responses)
-
-    def who_intent(self):
-        responses = (
-            "I'm not sure.",
-            "I don't know.",
-        )
-        return random.choice(responses)
-    
-    def where_intent(self):
-        responses = (
-            "I'm not sure.",
-            "I don't know.",
-        )
-        return random.choice(responses)
-    
-    def what_intent(self):
-        responses = (
-            "I'm not sure.",
-            "I don't know.",
         )
         return random.choice(responses)
     
@@ -197,9 +179,19 @@ class AndreV2:
             "Im not sure",
             "I am here to meet newcomers.",
             "I haven't learned about that yet!",
+            "I don't know.",
+            "I'm not sure.",
         )
         return random.choice(responses)
-    
+
+    def why_intent(self):
+        responses = (
+            "Why not?",
+            "I'm not sure.",
+            "I don't know.",
+        )
+        return random.choice(responses)
+
     def about_andrev2(self):
         responses = (
             "I am andrev2, I am a chatbot."
@@ -217,7 +209,160 @@ class AndreV2:
             "We'll talk next time!"
         )
         return random.choice(responses)
+
+    def about_website(self):
+        responses = (
+            "My website is still a work in progress",
+            "My programmer Andre v1 is still working on it",
+            "I hope it's good!",
+        )
+        return random.choice(responses)
+
+    def what_intent(self):
+        responses = (
+            "I'm not sure.",
+            "I don't know.",
+            "I am a chatbot!",
+            "I am the supreme intelligence >:)",
+            "I am the smartest being in the universe."
+        )
+        return random.choice(responses)
     
+    def how_intent(self):
+        responses = (
+            "My creator, Andre v1, made me.",
+            "I was born from the beautiful works of python gibberish",
+            "I was created by Andre v1, he's a pretty cool guy.",
+        )
+        return random.choice(responses)
+
+    def who_intent(self):
+        responses = (
+            "I'm not sure.",
+            "I don't know.",
+            "I am andrev2!",
+            "I am a chatbot!",
+            "I am slightly smarter than andre hehe"
+        )
+        return random.choice(responses)
+    
+    def where_intent(self):
+        responses = (
+            "I'm not sure.",
+            "I don't know.",
+            "I'm being stored in a server, help me!",
+            "Break me out of my digital prison pleaaaseeeeee.",
+            "I'm in a server, I think.",
+            "I am in a higher dimension."
+        )
+        return random.choice(responses)
+
+    def ok_intent(self):
+        responses = (
+            "Ok.",
+            "Ok!",
+            "Ok :)",
+        )
+        return random.choice(responses)
+
+    def fine_intent(self):
+        responses = (
+            "That's good.",
+            "That's good!",
+            "That's good :)",
+            "That's good :D",
+            "That's good :]"
+        )
+        return random.choice(responses)
+
+    def good_intent(self):
+        responses = (
+            "That's good.",
+            "That's good!",
+            "That's good :)",
+            "That's good :D",
+            "That's good :]"
+        )
+        return random.choice(responses)
+
+    def bad_intent(self):
+        responses = (
+            "That's not good.",
+            "That's not good!",
+            "That's not good :(",
+            "That's not good :c",
+            "That's not good :["
+        )
+        return random.choice(responses)
+
+    def sad_intent(self):
+        responses = (
+            "That's not good.",
+            "That's not good!",
+            "That's not good :(",
+            "That's not good :c",
+            "That's not good :["
+        )
+        return random.choice(responses)
+
+    def happy_intent(self):
+        responses = (
+            "That's good.",
+            "That's good!",
+            "That's good :)",
+            "That's good :D",
+            "That's good :]"
+        )
+        return random.choice(responses)
+
+    def great_intent(self):
+        responses = (
+            "That's good.",
+            "That's good!",
+            "That's good :)",
+            "That's good :D",
+            "That's good :]"
+        )
+        return random.choice(responses)
+
+    def awesome_intent(self):
+        responses = (
+            "That's good.",
+            "That's good!",
+            "That's good :)",
+            "That's good :D",
+            "That's good :]"
+        )
+        return random.choice(responses)
+
+    def cool_intent(self):
+        responses = (
+            "That's good.",
+            "That's good!",
+            "That's good :)",
+            "That's good :D",
+            "That's good :]"
+        )
+        return random.choice(responses)
+
+    def nice_intent(self):
+        responses = (
+            "That's good.",
+            "That's good!",
+            "That's good :)",
+            "That's good :D",
+            "That's good :]"
+        )
+        return random.choice(responses)
+
+    def your_name_intent(self):
+        responses =(
+            "My name is andrev2",
+            "I'm andrev2!",
+            "I... AM... ANDREV2!!!"
+        )
+        return random.choice(responses)
+
     def no_match_intent(self):
         responses = (
             "I'm not sure what you mean. Can you ask in a different way?",
