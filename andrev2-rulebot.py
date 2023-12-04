@@ -40,22 +40,20 @@ class AndreV2:
             'what_intent': r'what.*',
             'how_intent': r'how.*',
             'who_intent': r'who.*',
-            'where_intent': r'where.*'            
+            'where_intent': r'where.*'     
+            'ok_intent': r'ok.*',
+            'fine_intent': r'fine.*',
+            'good_intent': r'good.*',
+            'bad_intent': r'bad.*',
+            'sad_intent': r'sad.*',
+            'happy_intent': r'happy.*',
+            'great_intent': r'great.*',
+            'awesome_intent': r'awesome.*',
+            'cool_intent': r'cool.*',
+            'nice_intent': r'nice.*',
+            'no_match_intent': r'.*',     
         }
-    
-    # def greet(self):
-    #     self.name = input("Hello there, what's your name? ")
-    #     if ' ' in self.name.strip():
-    #         print("It seems like you entered more than one word for your name. Please provide a single-word name.")
-    #         self.greet()  # Recursively call greet to ask for the name again
-    #         return
-        
-    #     will_help = input(f"Hi {self.name}, I'm andrev2. I'm here to meet newcomers, welcome!")
-    #     if will_help in self.negatives:
-    #         print("Ok, have a nice day!")
-    #         return
-        
-    #     self.chat()
+
     def greet(self):
         self.name = input("Hello there, what's your name? ").split()[0]
         if not self.name:
@@ -96,6 +94,34 @@ class AndreV2:
                 return self.about_session()
             elif found_match and intent == 'about_website':
                 return self.about_website()
+            elif found_match and intent == 'what_intent':
+                return self.what_intent()
+            elif found_match and intent == 'how_intent':
+                return self.how_intent()
+            elif found_match and intent == 'who_intent':
+                return self.who_intent()
+            elif found_match and intent == 'where_intent':
+                return self.where_intent()
+            elif found_match and intent == 'ok_intent':
+                return self.ok_intent()
+            elif found_match and intent == 'fine_intent':
+                return self.fine_intent()
+            elif found_match and intent == 'good_intent':
+                return self.good_intent()
+            elif found_match and intent == 'bad_intent':
+                return self.bad_intent()
+            elif found_match and intent == 'sad_intent':
+                return self.sad_intent()
+            elif found_match and intent == 'happy_intent':
+                return self.happy_intent()
+            elif found_match and intent == 'great_intent':
+                return self.great_intent()
+            elif found_match and intent == 'awesome_intent':
+                return self.awesome_intent()
+            elif found_match and intent == 'cool_intent':
+                return self.cool_intent()
+            elif found_match and intent == 'nice_intent':
+                return self.nice_intent()
         return self.no_match_intent()
 
     def describe_website_intent(self):
@@ -159,6 +185,8 @@ class AndreV2:
             "We'll talk next time!"
         )
         return random.choice(responses)
+    
+    def 
     
     def no_match_intent(self):
         responses = (

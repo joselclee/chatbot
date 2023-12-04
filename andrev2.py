@@ -1,61 +1,74 @@
-import torch
-from transformers import BertTokenizer, BertForQuestionAnswering
-from transformers import BertTokenizer, BertForQuestionAnswering
-import torch
+import numpy as np
+import nltk
 import random
-import rasa
+import string # to process standard python strings
 
-# Load BERT model and tokenizer
-tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
-model = BertForQuestionAnswering.from_pretrained("bert-base-uncased")
+file = open('input.txt','r',errors = 'ignore')
+raw_doc = file.read()
+raw_doc = raw_doc.lower(); # converts to lowercase
+nltk.download('punkt') # Using Punkt tokenizer
+nltk.download('wordnet') # Using the wordnet dictionary
+nltk.download('omw-1.4') 
 
-# Load Rasa NLU model
-interpreter = rasa.nlu.model.Interpreter.load("path/to/your/nlu/model")
+sentence_tokens = nltk.sent_tokenize(raw_doc)# converts to list of sentences
+word_tokens = nltk.word_tokenize(raw_doc)# converts to list of words
 
-# Intent recognition function
-def recognize_intent(user_input):
-    result = interpreter.parse(user_input)
-    intent = result["intent"]["name"]
-    return intent
+lemmer = nltk.stem.WordNetLemmatizer()
+def LemTokens(tokens):
+    return [lemmer.lemmatize(token) for token in tokens]
+remove_punct_dict = dict((ord(punct), None) for punct in string.punctuation)
+def LemNormalize(text):
+    return LemTokens(nltk.word_tokenize(text.lower().translate(remove_punct_dict)))
 
-# BERT-based response generation function
-def generate_response_bert(question, context):
-    inputs = tokenizer(question, context, return_tensors="pt")
-    outputs = model(**inputs)
-    answer_start = torch.argmax(outputs.start_logits)
-    answer_end = torch.argmax(outputs.end_logits) + 1
-    answer = tokenizer.convert_tokens_to_string(tokenizer.convert_ids_to_tokens(inputs["input_ids"][0][answer_start:answer_end]))
-    return answer
+greet_inputs = ("hello", "hi", "greetings", "sup", "what's up","hey",)
+greet_responses = ["hi", "hey", "*nods*", "hi there", "hello", "I am glad! You are talking to me"]
 
-# Dialogue management function
-def manage_dialogue(intent, user_input, context):
-    if intent == "greet":
-        return "Hi there! How can I assist you today?"
-    elif intent == "goodbye":
-        return "Goodbye! Have a great day."
-    elif intent == "ask_question":
-        return generate_response_bert(user_input, context)
+def greet(sentence):
+    for word in sentence.split():
+        if word.lower() in greet_inputs:
+            return random.choice(greet_responses)
+        
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+
+def response(user_response):
+    bot_response=''
+    sentence_tokens.append(user_response)
+    TfidfVec = TfidfVectorizer(tokenizer=LemNormalize)
+    tfidf = TfidfVec.fit_transform(sentence_tokens)
+    
+    vals = cosine_similarity(tfidf[-1], tfidf)
+    idx=vals.argsort()[0][-2]
+    flat = vals.flatten()
+    flat.sort()
+    
+    req_tfidf = flat[-2]
+    if(req_tfidf==0):
+        bot_response=bot_response+"I'm sorry, I don't understand!"
+        return bot_response
     else:
-        return "I'm sorry, I don't understand that. Can you please rephrase?"
-
-# User feedback loop
-def get_user_feedback(response):
-    user_feedback = input(f"Was the response '{response}' helpful? (yes/no): ")
-    # You can handle feedback here, e.g., update a feedback database
-    if user_feedback.lower() == "no":
-        print("I'm sorry to hear that. Please provide more details for improvement.")
-
-# Main chatbot loop
-context = ""
-print("Chatbot: Hi, I'm your assistant. How can I help you today? Type 'exit' to end the conversation.")
-while True:
-    user_input = input("You: ")
-    if user_input.lower() == 'exit':
-        print("Chatbot: Goodbye!")
-        break
+        bot_response = bot_response+sentence_tokens[idx]
+        return bot_response
     
-    intent = recognize_intent(user_input)
-    response = manage_dialogue(intent, user_input, context)
+flag = True
+print("Hey, I'm NLTK-Bot. I will answer your queries about topics regarding nuclear science. If you want to exit, type Bye!")
+
+while(flag==True):
+    user_response = input()
+    user_response=user_response.lower()
     
-    print(f"Chatbot: {response}")
-    get_user_feedback(response)
+    if(user_response!='bye'):
+        if(user_response=='thanks' or user_response=='thank you' ):
+            flag=False
+            print("You are welcome..")
+        else:
+            if(greet(user_response)!=None):
+                print("NLTKBot: "+greet(user_response))
+            else:
+                print("NLTKBot: ",end="")
+                print(response(user_response))
+                sentence_tokens.remove(user_response)
+    else:
+        flag=False
+        print("Bot: Bye! take care..")
