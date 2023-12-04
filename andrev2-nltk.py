@@ -35,7 +35,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 def response(user_response):
     bot_response=''
     sentence_tokens.append(user_response)
-    TfidfVec = TfidfVectorizer(tokenizer=LemNormalize)
+    TfidfVec = TfidfVectorizer(tokenizer=LemNormalize, token_pattern=None)
     tfidf = TfidfVec.fit_transform(sentence_tokens)
     
     vals = cosine_similarity(tfidf[-1], tfidf)
@@ -54,21 +54,21 @@ def response(user_response):
 flag = True
 print("Hey, I'm a bot who reads shakespeare. I will respond in various shakespearian language. If you want to exit, type Bye!")
 
-while(flag==True):
+while flag:
     user_response = input()
-    user_response=user_response.lower()
+    user_response = user_response.lower()
     
-    if(user_response!='bye' or user_response!='bye!' or user_response!='goodbye' or user_response!='goodbye!'):
-        if(user_response=='thanks' or user_response=='thank you' ):
-            flag=False
+    if user_response not in ['bye', 'bye!', 'goodbye', 'goodbye!']:
+        if user_response == 'thanks' or user_response == 'thank you':
+            flag = False
             print("You are welcome..")
         else:
-            if(greet(user_response)!=None):
-                print("NLTKBot: "+greet(user_response))
+            if greet(user_response) is not None:
+                print("NLTKBot: " + greet(user_response))
             else:
-                print("NLTKBot: ",end="")
+                print("NLTKBot: ", end="")
                 print(response(user_response))
                 sentence_tokens.remove(user_response)
     else:
-        flag=False
+        flag = False
         print("Bot: Bye! take care..")

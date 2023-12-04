@@ -1,2 +1,15 @@
 Files with "example" in it are here for educational purposes for myself and all other viewers! 
 The code being deployed is/will be andrev2.py at ALL times.
+
+
+GODEL-example.py is code taken from:
+https://huggingface.co/microsoft/GODEL-v1_1-large-seq2seq?text=Hey+my+name+is+Julien%21+How+are+you%3F
+
+@misc{peng2022godel,
+author = {Peng, Baolin and Galley, Michel and He, Pengcheng and Brockett, Chris and Liden, Lars and Nouri, Elnaz and Yu, Zhou and Dolan, Bill and Gao, Jianfeng},
+title = {GODEL: Large-Scale Pre-training for Goal-Directed Dialog},
+howpublished = {arXiv},
+year = {2022},
+month = {June},
+url = {https://www.microsoft.com/en-us/research/publication/godel-large-scale-pre-training-for-goal-directed-dialog/},
+}

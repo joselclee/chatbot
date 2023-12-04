@@ -156,6 +156,7 @@ class AndreV2:
             'awesome_intent': self.awesome_intent,
             'cool_intent': self.cool_intent,
             'nice_intent': self.nice_intent,
+            'your_name_intent': self.your_name_intent,
         }
 
         for intent, function in intent_function_map.items():
