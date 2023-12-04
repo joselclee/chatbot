@@ -40,7 +40,7 @@ class AndreV2:
             'what_intent': r'what.*',
             'how_intent': r'how.*',
             'who_intent': r'who.*',
-            'where_intent': r'where.*'     
+            'where_intent': r'where.*',  
             'ok_intent': r'ok.*',
             'fine_intent': r'fine.*',
             'good_intent': r'good.*',
@@ -79,50 +79,82 @@ class AndreV2:
         while not self.make_exit(reply):
             reply = input(self.match_reply(reply))
     
+    # def match_reply(self, reply):
+    #     for key, value in self.response.items():
+    #         intent = key
+    #         regex_pattern = value
+    #         found_match = re.match(regex_pattern, reply)
+    #         if found_match and intent == 'describe_website_intent':
+    #             return self.describe_website_intent()
+    #         elif found_match and intent == 'answer_why_intent':
+    #             return self.answer_why_intent()
+    #         elif found_match and intent == 'about_andrev2':
+    #             return self.about_andrev2()
+    #         elif found_match and intent == 'about_session':
+    #             return self.about_session()
+    #         elif found_match and intent == 'about_website':
+    #             return self.about_website()
+    #         elif found_match and intent == 'what_intent':
+    #             return self.what_intent()
+    #         elif found_match and intent == 'how_intent':
+    #             return self.how_intent()
+    #         elif found_match and intent == 'who_intent':
+    #             return self.who_intent()
+    #         elif found_match and intent == 'where_intent':
+    #             return self.where_intent()
+    #         elif found_match and intent == 'ok_intent':
+    #             return self.ok_intent()
+    #         elif found_match and intent == 'fine_intent':
+    #             return self.fine_intent()
+    #         elif found_match and intent == 'good_intent':
+    #             return self.good_intent()
+    #         elif found_match and intent == 'bad_intent':
+    #             return self.bad_intent()
+    #         elif found_match and intent == 'sad_intent':
+    #             return self.sad_intent()
+    #         elif found_match and intent == 'happy_intent':
+    #             return self.happy_intent()
+    #         elif found_match and intent == 'great_intent':
+    #             return self.great_intent()
+    #         elif found_match and intent == 'awesome_intent':
+    #             return self.awesome_intent()
+    #         elif found_match and intent == 'cool_intent':
+    #             return self.cool_intent()
+    #         elif found_match and intent == 'nice_intent':
+    #             return self.nice_intent()
+    #     return self.no_match_intent()
+
     def match_reply(self, reply):
-        for key, value in self.response.items():
-            intent = key
-            regex_pattern = value
+        intent_function_map = {
+            'describe_website_intent': self.describe_website_intent,
+            'answer_why_intent': self.answer_why_intent,
+            'about_andrev2': self.about_andrev2,
+            'about_session': self.about_session,
+            'about_website': self.about_website,
+            'what_intent': self.what_intent,
+            'how_intent': self.how_intent,
+            'who_intent': self.who_intent,
+            'where_intent': self.where_intent,
+            'ok_intent': self.ok_intent,
+            'fine_intent': self.fine_intent,
+            'good_intent': self.good_intent,
+            'bad_intent': self.bad_intent,
+            'sad_intent': self.sad_intent,
+            'happy_intent': self.happy_intent,
+            'great_intent': self.great_intent,
+            'awesome_intent': self.awesome_intent,
+            'cool_intent': self.cool_intent,
+            'nice_intent': self.nice_intent,
+        }
+
+        for intent, function in intent_function_map.items():
+            regex_pattern = self.response.get(intent)
             found_match = re.match(regex_pattern, reply)
-            if found_match and intent == 'describe_website_intent':
-                return self.describe_website_intent()
-            elif found_match and intent == 'answer_why_intent':
-                return self.answer_why_intent()
-            elif found_match and intent == 'about_andrev2':
-                return self.about_andrev2()
-            elif found_match and intent == 'about_session':
-                return self.about_session()
-            elif found_match and intent == 'about_website':
-                return self.about_website()
-            elif found_match and intent == 'what_intent':
-                return self.what_intent()
-            elif found_match and intent == 'how_intent':
-                return self.how_intent()
-            elif found_match and intent == 'who_intent':
-                return self.who_intent()
-            elif found_match and intent == 'where_intent':
-                return self.where_intent()
-            elif found_match and intent == 'ok_intent':
-                return self.ok_intent()
-            elif found_match and intent == 'fine_intent':
-                return self.fine_intent()
-            elif found_match and intent == 'good_intent':
-                return self.good_intent()
-            elif found_match and intent == 'bad_intent':
-                return self.bad_intent()
-            elif found_match and intent == 'sad_intent':
-                return self.sad_intent()
-            elif found_match and intent == 'happy_intent':
-                return self.happy_intent()
-            elif found_match and intent == 'great_intent':
-                return self.great_intent()
-            elif found_match and intent == 'awesome_intent':
-                return self.awesome_intent()
-            elif found_match and intent == 'cool_intent':
-                return self.cool_intent()
-            elif found_match and intent == 'nice_intent':
-                return self.nice_intent()
+            if found_match:
+                return function()
+
         return self.no_match_intent()
+
 
     def describe_website_intent(self):
         responses = (
@@ -185,8 +217,6 @@ class AndreV2:
             "We'll talk next time!"
         )
         return random.choice(responses)
-    
-    def 
     
     def no_match_intent(self):
         responses = (
