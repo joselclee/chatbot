@@ -64,11 +64,11 @@ while flag:
             print("You are welcome..")
         else:
             if greet(user_response) is not None:
-                print("NLTKBot: " + greet(user_response))
+                print("Billiam: " + greet(user_response))
             else:
-                print("NLTKBot: ", end="")
+                print("Billiam: ", end="")
                 print(response(user_response))
                 sentence_tokens.remove(user_response)
     else:
         flag = False
-        print("Bot: Bye! take care..")
+        print("Billiam: Farewell thee...")
