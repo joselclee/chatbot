@@ -45,14 +45,14 @@ def response(user_response):
     
     req_tfidf = flat[-2]
     if(req_tfidf==0):
-        bot_response=bot_response+"I didn't get that."
+        bot_response=bot_response+"I haven't the slightest what that is."
         return bot_response
     else:
         bot_response = bot_response+sentence_tokens[idx]
         return bot_response
     
 flag = True
-print("Hey, I'm a bot who reads shakespeare. I will respond in various shakespearian language. If you want to exit, type Bye!")
+print("Hello! My name is Billiam and I am at your service. Please type Bye if you no longer wish to speak to me.")
 
 while flag:
     user_response = input()
