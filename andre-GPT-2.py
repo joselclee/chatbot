@@ -2,8 +2,8 @@ from transformers import GPT2LMHeadModel, GPT2Tokenizer
 
 def chat_with_gpt2():
     model_name = "gpt2"
-    model = GPT2LMHeadModel.from_pretrained(model_name)
-    tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+    model = GPT2LMHeadModel.from_pretrained("gpt2-large")
+    tokenizer = GPT2Tokenizer.from_pretrained("gpt2-large")
 
     conversation_history = []
 
@@ -21,7 +21,7 @@ def chat_with_gpt2():
 
         # Tokenize and generate a response
         input_ids = tokenizer.encode('\n'.join(conversation_history), return_tensors='pt')
-        output = model.generate(input_ids, attention_mask=input_ids, do_sample=True, max_length=100, num_beams=5, no_repeat_ngram_size=2, pad_token_id=tokenizer.eos_token_id)
+        output = model.generate(input_ids, do_sample=True, max_length=20, num_beams=5, no_repeat_ngram_size=3, pad_token_id=tokenizer.bos_token_id)
 
         # Decode and display the bot's response
         bot_response = tokenizer.decode(output[0], skip_special_tokens=True)
@@ -32,6 +32,3 @@ def chat_with_gpt2():
 
 if __name__ == "__main__":
     chat_with_gpt2()
-
-
-
