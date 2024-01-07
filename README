@@ -1,6 +1,4 @@
-Files with "example" in it are here for educational purposes for myself and all other viewers! 
-The code being deployed is/will be andrev2.py at ALL times.
-
+This repository is filled with various models and examples that I am learning to use. As such if you are an outsider looking at my code - be aware that it is not organized for the layman.
 
 GODEL-example.py is code taken from:
 https://huggingface.co/microsoft/GODEL-v1_1-large-seq2seq?text=Hey+my+name+is+Julien%21+How+are+you%3F
